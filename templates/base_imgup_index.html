@@ -1,0 +1,16 @@
+{% extends "base_imgup.html" %}
+{% load thumbnail %}
+{% block title %}Latest{% endblock %}
+{% block content %}
+	{% if images %}
+			{% for i in images %}
+				<a href="{{ i.img.url }}">
+					{% thumbnail i.img "150x150" crop="center" as im %}
+						<img class="imgBox" src="{{ im.url }}" alt="{{ i.img.title }}">
+					{% endthumbnail %}
+				</a>
+			{% endfor %}
+	{% else %}
+		No images uploaded yet.
+	{% endif %}
+{% endblock %}

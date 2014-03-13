@@ -1,0 +1,119 @@
+body {
+	font-family: Tahoma;
+	color: #000;
+	background-color: #fff;
+	margin: 0;
+	padding: 0;
+	font-size: 13px;
+}
+
+.nav {
+	color: #fff;
+	max-height: 50px;
+	width: 100%;
+	top: 0;
+	left: 0;
+	right: 0;
+	position: relative;
+	background: #21282E;
+	padding: 10px 15px 10px 15px;
+	border-bottom: 1px solid #3D3D3D;
+	display: inline-block;
+}
+
+.nav a {
+	font-size: 24px;
+	color: #fff;
+	margin-right: 15px;
+	text-decoration: none;
+}
+
+.nav a:hover {
+	text-decoration: underline;
+}
+
+.nav .right {
+	float: right;
+	margin-right: 5%;
+}
+
+.nav form input {
+	background: #27333D;
+	color: #fff;
+	border: 1px solid #ccc;
+	margin-right: 5px;
+	max-width: 110px;
+}
+
+button {
+	color: #fff;
+	background-color: #4D9E28;
+	border: 1px solid #3d3d3d;
+	padding: 5px 10px 5px 10px;
+}
+
+#toggleLogin {
+	margin-left: 10px;
+	display: none;
+}
+
+#logError {
+	display: none;
+	color: #fff;
+	width: 100%;
+	max-height: 50px;
+	background: #AB2020;
+	left: 0;
+	right: 0;
+	padding: 5px;
+}
+
+.imgBox {
+	display: inline-block;
+	width: 150px;
+	height: 150px;
+	text-align: center;
+	border: 1px solid #000;
+	margin: 5px;
+	margin-right: 0px;
+}
+
+#content {
+	margin: 1% 2% 0% 2%;
+}
+
+@media (max-width: 540px) {
+	.nav {
+		display: inline-block;
+		max-height: 150px;
+	}
+
+	.nav a {
+		font-size: 21px;
+	}
+
+	.nav form input {
+		display: block;
+	}
+
+	.nav button {
+		margin-top: 5px;
+	}
+
+	#loginForm {
+		display: none;
+	}
+
+	#toggleLogin {
+		display: inline-block;
+	}
+
+	#toggleLoginHide {
+		display: none;
+	}
+
+	.imgBox {
+		margin-left: auto;
+		margin-right: auto;
+	}
+}

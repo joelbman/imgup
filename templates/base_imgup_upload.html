@@ -1,0 +1,15 @@
+{% extends "base_imgup.html" %}
+{% block title %}Upload{% endblock %}
+{% block content %}
+	{% if user.is_authenticated %}
+		<h3>Upload a new image</h3>
+		<form action="/imgup/upload/" class="uploadForm" method="post" enctype="multipart/form-data">
+			{% csrf_token %}
+			{{ form.as_p }}
+			<button type="submit">Upload</button>
+		</form>
+	{% else %}
+		<h3>Error!</h3>
+		Authentication is required to access this page.
+	{% endif %}
+{% endblock %}
