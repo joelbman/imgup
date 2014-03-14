@@ -30,10 +30,10 @@ def user_logout(request):
 
 # Write uploaded file to disk
 def handle_uploaded_file(file_path):
-    dest = open(file_path.name, "wb")
-    for chunk in file_path.chunks():
-        dest.write(chunk)
-    dest.close()
+	dest = open(file_path.name, "wb")
+	for chunk in file_path.chunks():
+		dest.write(chunk)
+	dest.close()
 
 # Displays the upload form or processes it if it has been sent.
 def upload_file(request):
@@ -45,7 +45,7 @@ def upload_file(request):
 				uploader = request.user,
 				title = request.POST['title'],
 				private = request.POST.get('private', False),
-				img = request.FILES["image"]
+				img = request.FILES["image"],
 				)
 			i.save()
 		return render(request, "base_imgup_upload.html", {"form": form })

@@ -13,9 +13,23 @@ class ImageUser(models.Model):
 		return self.user
 
 class Image(models.Model):
+
+	def rename(path):
+		def wrapper(instance, filename):
+			import hashlib
+			from datetime import datetime
+	
+			ext = filename.split(".")[-1]
+			ihash = hashlib.md5(str(datetime.now().microsecond)).hexdigest()[0:8]
+
+			new_filename = ihash + "." + ext
+			full_path = path + new_filename
+
+			return full_path
+		return wrapper
+
 	datetime = models.DateTimeField(auto_now_add = True)
-	img = ImageField(upload_to="imgup/")
-	imghash = models.CharField(max_length=8)
+	img = ImageField(upload_to=rename("imgup/"))
 	private = models.BooleanField(default=False)
 	title = models.CharField(max_length=30, default="")
 	uploader = models.ForeignKey(User)
