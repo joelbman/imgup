@@ -14,6 +14,7 @@ class ImageUser(models.Model):
 
 class Image(models.Model):
 
+	# Generate hash filenames
 	def rename(path):
 		def wrapper(instance, filename):
 			import hashlib
@@ -21,7 +22,6 @@ class Image(models.Model):
 	
 			ext = filename.split(".")[-1]
 			ihash = hashlib.md5(str(datetime.now().microsecond)).hexdigest()[0:8]
-
 			new_filename = ihash + "." + ext
 			full_path = path + new_filename
 
