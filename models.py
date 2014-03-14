@@ -13,11 +13,12 @@ class ImageUser(models.Model):
 		return self.user
 
 class Image(models.Model):
+	datetime = models.DateTimeField(auto_now_add = True)
 	img = ImageField(upload_to="imgup/")
+	imghash = models.CharField(max_length=8)
+	private = models.BooleanField(default=False)
 	title = models.CharField(max_length=30, default="")
 	uploader = models.ForeignKey(User)
-	private = models.BooleanField(default=False)
-	datetime = models.DateTimeField(auto_now_add = True)
 
 	def __unicode__(self):
 		return self.img
