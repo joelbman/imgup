@@ -11,6 +11,9 @@
 		{% if success %}
 			<p>Upload successful!</p>
 		{% endif %}
+		<h3>Disk space used</h3>
+		<progress value="{{ usedspace }}" max="{{ totalspace }}"></progress><br>
+		{{ usedspace }}MB out of {{ totalspace }}MB
 	{% else %}
 		<h3>Error!</h3>
 		Authentication is required to access this page.

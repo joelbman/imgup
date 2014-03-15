@@ -42,6 +42,9 @@ def handle_uploaded_file(file_path):
 
 # Displays the upload form or processes it if it has been sent.
 def upload_file(request):
+	iu = ImageUser.objects.get(user=request.user)
+	usedspace = iu.current_total_size / 1024
+	totalspace = iu.max_total_size / 1024
 	if request.method == 'POST':
 		success = False
 		form = UploadImageForm(request.user, request.POST, request.FILES)
@@ -55,14 +58,22 @@ def upload_file(request):
 				img = imgfile,
 				)
 			i.save()
-			iu = ImageUser.objects.get(user=request.user)
 			iu.current_total_size += imgfile._size/1024
 			iu.save()
 			success = True
-		return render(request, "base_imgup_upload.html", {"form": form, "success": success})
+		return render(request, "base_imgup_upload.html", {
+			"form": form,
+			"success": success,
+			"usedspace": usedspace,
+			"totalspace": totalspace
+			})
 	else:
 		form = UploadImageForm(request.user)
-		return render(request, "base_imgup_upload.html", {"form": form })
+		return render(request, "base_imgup_upload.html", {
+			"form": form,
+			"usedspace": usedspace,
+			"totalspace": totalspace
+			})
 
 # Default profile view, displays latest non-private uploads by the user
 # !!! NOT YET IMPLEMENTED !!!

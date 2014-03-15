@@ -5,20 +5,22 @@ body {
 	margin: 0;
 	padding: 0;
 	font-size: 13px;
+	width: 100%;
 }
 
 .nav {
 	color: #fff;
 	max-height: 50px;
-	width: 97.8%;
+	width: 100%;
 	top: 0;
 	left: 0;
 	right: 0;
 	position: relative;
 	background: #21282E;
-	padding: 10px 15px 10px 15px;
+	padding: 10px 5px 10px 15px;
 	border-bottom: 1px solid #3D3D3D;
 	display: inline-block;
+	box-sizing: border-box;
 }
 
 .nav a {
@@ -34,7 +36,7 @@ body {
 
 .nav .right {
 	float: right;
-	margin-right: 5%;
+	padding-right: 5px;
 }
 
 .nav form input {
@@ -112,8 +114,7 @@ button {
 		display: none;
 	}
 
-	.imgBox {
-		margin-left: auto;
-		margin-right: auto;
+	#content {
+		padding-left: 5%;
 	}
 }
