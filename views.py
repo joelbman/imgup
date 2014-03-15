@@ -18,7 +18,7 @@ def user_login(request):
 	if user is not None:
 	    if user.is_active:
 	        login(request, user)
-	        imguser = ImageUser.objects.get(user=user)
+	        imguser = ImageUser.objects.filter(user=user)
 	        if imguser.count() == 0:
 	        	iu = ImageUser(user=user)
 	        	iu.save()
