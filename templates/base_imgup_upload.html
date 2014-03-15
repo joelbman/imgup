@@ -8,6 +8,9 @@
 			{{ form.as_p }}
 			<button type="submit">Upload</button>
 		</form>
+		{% if success %}
+			<p>Upload successful!</p>
+		{% endif %}
 	{% else %}
 		<h3>Error!</h3>
 		Authentication is required to access this page.

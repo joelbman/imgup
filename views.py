@@ -2,14 +2,15 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from imgup.forms import UploadImageForm
-from imgup.models import Image
+from imgup.models import Image, ImageUser
 
 # Front page, list 40 of the latest non-private images
 def index(request):
-	q = Image.objects.filter(private=False).order_by('-datetime')[:40]
-	return render(request, 'base_imgup_index.html', {'images': q})
+	images = Image.objects.filter(private=False).order_by('-datetime')[:40]
+	return render(request, 'base_imgup_index.html', {'images': images})
 
 # Handling user logins, returns HTTP status codes for the JavaScript to interpret
+# Creates a new ImageUser extension for the logging user if one doesn't already exist
 def user_login(request):
 	usern = request.POST['username']
 	passw = request.POST['password']
@@ -17,6 +18,10 @@ def user_login(request):
 	if user is not None:
 	    if user.is_active:
 	        login(request, user)
+	        imguser = ImageUser.objects.get(user=user)
+	        if imguser.count() == 0:
+	        	iu = ImageUser(user=user)
+	        	iu.save()
 	        return HttpResponse(status=200)
 	    else:
 	        return HttpResponse(status=401)
@@ -38,19 +43,25 @@ def handle_uploaded_file(file_path):
 # Displays the upload form or processes it if it has been sent.
 def upload_file(request):
 	if request.method == 'POST':
-		form = UploadImageForm(request.POST, request.FILES)
+		success = False
+		form = UploadImageForm(request.user, request.POST, request.FILES)
 		if form.is_valid():
-			handle_uploaded_file(request.FILES["image"])
+			imgfile = request.FILES["image"]
+			handle_uploaded_file(imgfile)
 			i = Image(
 				uploader = request.user,
 				title = request.POST['title'],
 				private = request.POST.get('private', False),
-				img = request.FILES["image"],
+				img = imgfile,
 				)
 			i.save()
-		return render(request, "base_imgup_upload.html", {"form": form })
+			iu = ImageUser.objects.get(user=request.user)
+			iu.current_total_size += imgfile._size/1024
+			iu.save()
+			success = True
+		return render(request, "base_imgup_upload.html", {"form": form, "success": success})
 	else:
-		form = UploadImageForm()
+		form = UploadImageForm(request.user)
 		return render(request, "base_imgup_upload.html", {"form": form })
 
 # Default profile view, displays latest non-private uploads by the user
