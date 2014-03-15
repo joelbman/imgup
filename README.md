@@ -19,6 +19,6 @@ Requirements
 
 Both of these packages can be installed using pip:
 
-pip install <package>
+pip install packagename
 
 
