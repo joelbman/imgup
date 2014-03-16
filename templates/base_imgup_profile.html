@@ -1,6 +1,6 @@
 {% extends "base_imgup.html" %}
 {% load thumbnail %}
-{% block title %}Uploads by {{ user }}{% endblock %}
+{% block title %}{{ user }}{% endblock %}
 {% block content %}
 	<h3>Images uploaded by {{ user }}</h3>
 	{% if images %}
