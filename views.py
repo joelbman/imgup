@@ -1,6 +1,7 @@
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from imgup.forms import UploadImageForm
 from imgup.models import Image, ImageUser
 
@@ -76,9 +77,25 @@ def upload_file(request):
 			})
 
 # Default profile view, displays latest non-private uploads by the user
-# !!! NOT YET IMPLEMENTED !!!
-def profile_view_index(request):
+# If the user is logged in and displaying his own profile, private images are also shown.
+def profile_view_index(request, user_id):
+	user = get_object_or_404(User, pk=user_id)
+	if request.user.is_authenticated and request.user == user:
+		images = Image.objects.filter(uploader=user)
+	else:
+		images = Image.objects.filter(uploader=user, private=False)
+
+	return render(request, "base_imgup_profile.html", {
+		"images": images,
+		"user": user
+		})
+
+# Delete requested image from DB and filesystem
+def delete_image(request, image_id):
 	if request.user.is_authenticated:
-		return render(request, "base_imgup_profile.html")
+		img = get_object_or_404(Image, pk=image_id)
+		if request.user == img.uploader:
+			# TODO: delete
+			return HttpResponseRedirect("/imgup/")
 	else:
 		return HttpResponseRedirect("/imgup/")

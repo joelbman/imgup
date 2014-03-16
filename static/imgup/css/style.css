@@ -39,6 +39,11 @@ body {
 	padding-right: 5px;
 }
 
+.nav .right a {
+	font-size: 13px;
+	font-weight: bold;
+}
+
 .nav form input {
 	background: #27333D;
 	color: #fff;
