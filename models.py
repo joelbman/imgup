@@ -46,4 +46,7 @@ class Image(models.Model):
 	uploader = models.ForeignKey(User)
 
 	def __unicode__(self):
-		return self.img
+		if self.title:
+			return self.title
+		else:
+			return self.img.name
