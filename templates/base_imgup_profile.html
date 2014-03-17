@@ -5,11 +5,16 @@
 	<h3>Images uploaded by {{ user }}</h3>
 	{% if images %}
 			{% for i in images %}
-				<a href="{{ i.img.url }}">
-					{% thumbnail i.img "150x150" crop="center" as im %}
-						<img class="imgBox" src="{{ im.url }}" alt="{{ i.img.title }}">
-					{% endthumbnail %}
-				</a>
+				<div class="imgBox">
+					<a href="{{ i.img.url }}">
+						{% thumbnail i.img "150x150" crop="center" as im %}
+							<img src="{{ im.url }}" alt="{{ i.img.title }}">
+							{% if owner %}
+								<a href="/imgup/delete/{{ i.id }}/">Delete</a>
+							{% endif %}
+						{% endthumbnail %}
+					</a>
+				</div>
 			{% endfor %}
 	{% else %}
 		No images uploaded yet.

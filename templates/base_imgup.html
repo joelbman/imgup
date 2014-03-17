@@ -24,7 +24,7 @@
       {% if user.is_authenticated %}
         <a href="/imgup/upload/">Upload</a>
           <div class="right">
-            Logged in as <a href="/imgup/user/{{ user.id }}/">{{ user }}</a>
+            Logged in as <a href="/imgup/user/{{ user }}/">{{ user }}</a>
             <button id="logOutButton">Logout</button>
           </div>
       {% else %}

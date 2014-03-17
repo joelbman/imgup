@@ -79,24 +79,38 @@ def upload_file(request):
 
 # Profile view, displays latest non-private uploads by the user
 # If the user is logged in and viewing his/her own profile, private images are also shown.
-def profile_view_index(request, user_id):
-	user = get_object_or_404(User, pk=user_id)
-	if request.user.is_authenticated and request.user == user:
-		images = Image.objects.filter(uploader=user).order_by("-datetime")
-	else:
-		images = Image.objects.filter(uploader=user, private=False)
+def profile_view(request, *args, **kwargs):
+	if ("user_name" in kwargs):
+		user_name = kwargs["user_name"]
+		user = get_object_or_404(User, username=user_name)
+		owner = False
+		if request.user.is_authenticated and request.user == user:
+			images = Image.objects.filter(uploader=user).order_by("-datetime")
+			owner = True
+		else:
+			images = Image.objects.filter(uploader=user, private=False).order_by("-datetime")
 
-	return render(request, "base_imgup_profile.html", {
-		"images": images,
-		"user": user
-		})
+		return render(request, "base_imgup_profile.html", {
+			"images": images,
+			"user": user,
+			"owner": owner
+			})
+	else:
+		if request.user.is_authenticated:
+			return HttpResponseRedirect("/imgup/user/" + request.user.username + "/")
+		else:
+		 	return HttpResponseRedirect("/imgup/")
 
 # Delete requested image from DB and filesystem
 def delete_image(request, image_id):
 	if request.user.is_authenticated:
 		img = get_object_or_404(Image, pk=image_id)
 		if request.user == img.uploader:
-			# TODO: delete
-			return HttpResponseRedirect("/imgup/")
+			iu = get_object_or_404(ImageUser, user=request.user)
+			iu.current_total_size -= img.img.size / 1024
+			iu.save()
+			img.img.delete()
+			img.delete()
+			return HttpResponseRedirect("/imgup/user/")
 	else:
 		return HttpResponseRedirect("/imgup/")

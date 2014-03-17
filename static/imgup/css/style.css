@@ -89,6 +89,20 @@ button {
 	margin: 1% 2% 0% 2%;
 }
 
+#content h3 {
+	font-size: 19px;
+	font-family: Helvetica;
+}
+
+#content a {
+	text-decoration: none;
+	color: #235182;
+}
+
+#content a:hover {
+	font-weight: bold;
+}
+
 @media (max-width: 540px) {
 	.nav {
 		display: inline-block;
