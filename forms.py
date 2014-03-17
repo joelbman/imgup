@@ -20,7 +20,7 @@ class UploadImageForm(forms.Form):
 			raise forms.ValidationError(
 				"Image is too large! Maximium allowed size is " 
 				+ str(imguser.max_file_size/1024) + "MB."
-				"The image was " + str(image._size/1024/1024) + "MB"
+				" The image was " + str(image._size/1024/1024) + "MB"
 				)
 		if imguser.current_total_size + image._size/1024 > imguser.max_total_size:
 			raise forms.ValidationError("You have reached the total upload limit.")

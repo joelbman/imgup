@@ -101,7 +101,8 @@ def profile_view(request, *args, **kwargs):
 		else:
 		 	return HttpResponseRedirect("/imgup/")
 
-# Delete requested image from DB and filesystem
+# Delete requested image from the database and filesystem and
+# subtract the image size from the user's current disk usage
 def delete_image(request, image_id):
 	if request.user.is_authenticated:
 		img = get_object_or_404(Image, pk=image_id)
