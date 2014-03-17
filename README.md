@@ -4,6 +4,7 @@ Description
 A very simplistic image view-upload system using Django.
 
 Demo: http://joel.kapsi.fi/imgup/
+
 Username: demo, password: test
 
 Features
