@@ -13,6 +13,8 @@ Features
   - Extending Django's default user authentication
 - Limiting each individual user's maximium file size and total disk space usage
   - Superusers can set the limits for each individual user through Django administration
+- Responsive design
+  - The layout works regardless of device or resolution
 
 Requirements
 =====
