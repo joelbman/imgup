@@ -34,13 +34,6 @@ def user_logout(request):
 	logout(request)
 	return HttpResponse(status=200)
 
-# Write uploaded file to disk
-def handle_uploaded_file(file_path):
-	dest = open(file_path.name, "wb")
-	for chunk in file_path.chunks():
-		dest.write(chunk)
-	dest.close()
-
 # Displays the upload form or processes it if it has been sent.
 def upload_file(request):
 	iu = ImageUser.objects.get(user=request.user)
@@ -51,7 +44,6 @@ def upload_file(request):
 		form = UploadImageForm(request.user, request.POST, request.FILES)
 		if form.is_valid():
 			imgfile = request.FILES["image"]
-			handle_uploaded_file(imgfile)
 			i = Image(
 				uploader = request.user,
 				title = request.POST['title'],
