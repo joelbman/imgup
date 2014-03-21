@@ -42,11 +42,7 @@ class Image(models.Model):
 	datetime = models.DateTimeField(auto_now_add = True)
 	img = ImageField(upload_to=rename("imgup/"))
 	private = models.BooleanField(default=False)
-	title = models.CharField(max_length=30, default="")
 	uploader = models.ForeignKey(User)
 
 	def __unicode__(self):
-		if self.title:
-			return self.title
-		else:
-			return self.img.name
+		return self.img.name
