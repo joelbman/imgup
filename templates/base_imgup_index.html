@@ -4,9 +4,9 @@
 {% block content %}
 	{% if images %}
 		{% for i in images %}
-			<a href="{{ i.img.url }}">
+			<a href="{{ i.img.url }}" data-lightbox="img-{{ i.id }}">
 				{% thumbnail i.img "150x150" crop="center" as im %}
-					<img class="imgBox" src="{{ im.url }}" alt="{{ i.img.title }}">
+					<img class="imgBox" src="{{ im.url }}" alt="img-{{ i.id }}">
 				{% endthumbnail %}
 			</a>
 		{% endfor %}

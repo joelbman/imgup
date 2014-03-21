@@ -11,7 +11,6 @@ def index(request):
 	return render(request, 'base_imgup_index.html', {'images': images})
 
 # Handling user logins, returns HTTP status codes for the JavaScript to interpret
-# Creates a new ImageUser extension for the logging user if one doesn't already exist
 def user_login(request):
 	usern = request.POST['username']
 	passw = request.POST['password']
@@ -19,10 +18,6 @@ def user_login(request):
 	if user is not None:
 	    if user.is_active:
 	        login(request, user)
-	        imguser = ImageUser.objects.filter(user=user)
-	        if imguser.count() == 0:
-	        	iu = ImageUser(user=user)
-	        	iu.save()
 	        return HttpResponse(status=200)
 	    else:
 	        return HttpResponse(status=401)
@@ -35,8 +30,13 @@ def user_logout(request):
 	return HttpResponse(status=200)
 
 # Displays the upload form or processes it if it has been sent.
+# If the user has no ImageUser object, create one.
 def upload_file(request):
-	iu = ImageUser.objects.get(user=request.user)
+	try:
+		iu = ImageUser.objects.get(user=request.user)
+	except ImageUser.DoesNotExist:
+		iu = ImageUser(user=request.user)
+		iu.save()
 	usedspace = round(float(iu.current_total_size) / 1024.0, 1)
 	totalspace = round(float(iu.max_total_size) / 1024.0, 1)
 	if request.method == 'POST':
@@ -46,7 +46,6 @@ def upload_file(request):
 			imgfile = request.FILES["image"]
 			i = Image(
 				uploader = request.user,
-				title = request.POST['title'],
 				private = request.POST.get('private', False),
 				img = imgfile,
 				)

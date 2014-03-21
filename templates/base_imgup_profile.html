@@ -6,9 +6,9 @@
 	{% if images %}
 		{% for i in images %}
 			<div class="imgBox">
-				<a href="{{ i.img.url }}">
+				<a href="{{ i.img.url }}" data-lightbox="img-{{ i.id }}">
 					{% thumbnail i.img "150x150" crop="center" as im %}
-						<img src="{{ im.url }}" alt="{{ i.img.title }}">
+						<img src="{{ im.url }}" alt="img-{{ i.id }}">
 						{% if owner %}
 							<a href="/imgup/delete/{{ i.id }}/">Delete</a>
 						{% endif %}

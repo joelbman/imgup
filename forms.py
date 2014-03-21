@@ -3,10 +3,9 @@ from imgup.models import ImageUser
 
 class UploadImageForm(forms.Form):
 
-	title = forms.CharField(required=False)
-	private = forms.BooleanField(required=False)
 	image = forms.ImageField()
-
+	private = forms.BooleanField(required=False)
+	
 	# Override the initialization so request.user can be passed
 	def __init__(self, usern, *args, **kwargs):
 		super(UploadImageForm, self).__init__(*args, **kwargs)
