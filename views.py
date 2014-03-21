@@ -32,11 +32,12 @@ def user_logout(request):
 # Displays the upload form or processes it if it has been sent.
 # If the user has no ImageUser object, create one.
 def upload_file(request):
-	try:
-		iu = ImageUser.objects.get(user=request.user)
-	except ImageUser.DoesNotExist:
-		iu = ImageUser(user=request.user)
-		iu.save()
+	while True:
+		try:
+			iu = ImageUser.objects.get(user=request.user)
+		except ImageUser.DoesNotExist:
+			iu = ImageUser(user=request.user)
+			iu.save()
 	usedspace = round(float(iu.current_total_size) / 1024.0, 1)
 	totalspace = round(float(iu.max_total_size) / 1024.0, 1)
 	if request.method == 'POST':
