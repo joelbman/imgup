@@ -39,7 +39,6 @@ def upload_file(request):
 		except ImageUser.DoesNotExist:
 			iu = ImageUser(user=request.user)
 			iu.save()
-			break;
 	usedspace = round(float(iu.current_total_size) / 1024.0, 1)
 	totalspace = round(float(iu.max_total_size) / 1024.0, 1)
 	if request.method == 'POST':
