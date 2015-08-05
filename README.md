@@ -2,6 +2,7 @@ Description
 =====
 
 A very simplistic image view-upload system using Django.
+The project was made for refreshing my Django knowledge after a long break.
 
 Demo: http://joel.kapsi.fi/imgup/
 
@@ -13,8 +14,6 @@ Features
   - Extending Django's default user authentication
 - Limiting each individual user's maximium file size and total disk space usage
   - Superusers can set the limits for each individual user through Django administration
-- Responsive design
-  - The layout works regardless of device or resolution
 
 Requirements
 =====
@@ -24,6 +23,6 @@ Requirements
 
 Both of these packages can be installed using pip:
 
-pip install packagename
+```pip install pillow sorl-thumbnail```
 
 
